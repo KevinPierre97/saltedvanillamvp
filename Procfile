@@ -1,2 +1,2 @@
-web: gunicorn saltedvanillamvp.wsgi --log-file -
+web: gunicorn myclientapp.wsgi --log-file -
 release: bash release.sh
