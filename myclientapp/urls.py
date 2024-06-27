@@ -14,6 +14,8 @@
 
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 from mymainapp.views import (
@@ -36,4 +38,4 @@ urlpatterns = [
     path('login/', login_view, name="login"),
     path('account/', account_view, name="account_detail"),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

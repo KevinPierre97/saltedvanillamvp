@@ -8,6 +8,9 @@ WHITENOISE_AUTOREFRESH = True
 LOCKDOWN_ENABLED = False
 # LOCKDOWN_PASSWORDS = env('LOCKDOWN_PASSWORDS')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 DATABASES = {
     "default": env.db("DATABASE_URL")
     # "default": "postgres://tutorial:tutorial@db/tutorial"
