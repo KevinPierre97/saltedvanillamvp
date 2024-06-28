@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Maker, ScentNote, Candle, Review, List
+from .models import Maker, ScentNote, Candle, Review, List, ListItem
 
 admin.site.register(Maker)
 admin.site.register(ScentNote)
@@ -20,3 +20,10 @@ class ReviewAdmin(admin.ModelAdmin):
 admin.site.register(Review, ReviewAdmin)
 
 admin.site.register(List)
+
+
+class ListItemAdmin(admin.ModelAdmin):
+    list_display = ('candle_id', 'list_id')
+
+
+admin.site.register(ListItem, ListItemAdmin)

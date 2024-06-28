@@ -32,7 +32,7 @@ class ScentNote(models.Model):
 
     def folder_path_note(self, filename):
         """ Returns the name of the path, which creates a folder for every scent note to store its image"""
-        return f"{re.sub('[^0-9a-zA-Z]', '_', self.name)}/{filename}"
+        return f"scentnotes/{re.sub('[^0-9a-zA-Z]', '_', self.name)}/{filename}"
     scentnote_image = models.ImageField(upload_to=folder_path_note, blank=True)
 
     NOTE_TYPE_OPTIONS = (
@@ -70,7 +70,7 @@ class Candle(models.Model):
 
     def folder_path_candle(self, filename):
         # return f'{self.maker_id.name.replace(" ", "_")}/{self.name.replace(" ", "_")}/{filename}'
-        return f"{re.sub('[^0-9a-zA-Z]', '_', self.maker_id.name)}/{re.sub('[^0-9a-zA-Z]', '_', self.name)}/{filename}"
+        return f"candles/{re.sub('[^0-9a-zA-Z]', '_', self.maker_id.name)}/{re.sub('[^0-9a-zA-Z]', '_', self.name)}/{filename}"
     candle_image = models.ImageField(upload_to=folder_path_candle, blank=True)
 
     isImageAdminApproved = models.BooleanField(default=False)
@@ -141,7 +141,7 @@ class List(models.Model):
         default=0
     )
 
-    candles_of_list = models.ManyToManyField(Candle, blank=True)
+    # candles_of_list = models.ManyToManyField(Candle, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     isActive = models.BooleanField(default=True)
@@ -151,7 +151,19 @@ class List(models.Model):
 
     def __str__(self):
         """ String representation of the list """
-        return f'{self.user_id} ({self.name})'
+        return f'{self.name} ({self.user_id})'
 
     def get_absolute_url(self):
         return reverse('list-detail', args=[self.pk])
+
+
+class ListItem(models.Model):
+    """ Model representing a single item of a list """
+    list_id = models.ForeignKey(List, on_delete=models.CASCADE)
+    candle_id = models.ForeignKey(Candle, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date_added']
+        unique_together = ('list_id', 'candle_id')
+
