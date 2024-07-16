@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Candle Reviews</h1>
+    {% if review_list %}
+        <ul>
+            {% for review in review_list %}
+                <li> {{ review.user_id.username }} rated {{ review.candle_id }}: {{ review.get_rating_display }}</li>
+                <p> {{ review.review_text }}</p>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no reviews.</p>
+    {% endif %}
+{% endblock %}

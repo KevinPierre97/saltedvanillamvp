@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Maker, ScentNote, Candle, Review, List, ListItem
+from .models import Brand, ScentNote, Candle, Review, List, ListItem, Report
 
-admin.site.register(Maker)
+admin.site.register(Brand)
 admin.site.register(ScentNote)
 
 
 class CandleAdmin(admin.ModelAdmin):
-    list_display = ('name', 'maker_id', 'date_added')
+    list_display = ('name', 'brand_id', 'date_added')
     readonly_fields = ('gid',)
 
 
@@ -27,3 +27,5 @@ class ListItemAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ListItem, ListItemAdmin)
+
+admin.site.register(Report)

@@ -5,7 +5,7 @@ from django.urls import reverse
 from usermodel.models import User
 
 
-class Maker(models.Model):
+class Brand(models.Model):
     """ Model representing a candle maker or brand """
     gid = models.UUIDField(#primary_key=True,
                            default=uuid.uuid4,
@@ -63,14 +63,14 @@ class Candle(models.Model):
     """ Model representing a candle """
     gid = models.UUIDField(default=uuid.uuid4)
     name = models.CharField(max_length=255)
-    maker_id = models.ForeignKey(Maker, on_delete=models.RESTRICT, null=True)
+    brand_id = models.ForeignKey(Brand, on_delete=models.RESTRICT, null=True)
     description = models.TextField(blank=True)
     notes = models.ManyToManyField(ScentNote, blank=True,
                                    help_text="Enter in the fragrance notes listed on the label of the candle")
 
     def folder_path_candle(self, filename):
         # return f'{self.maker_id.name.replace(" ", "_")}/{self.name.replace(" ", "_")}/{filename}'
-        return f"candles/{re.sub('[^0-9a-zA-Z]', '_', self.maker_id.name)}/{re.sub('[^0-9a-zA-Z]', '_', self.name)}/{filename}"
+        return f"candles/{re.sub('[^0-9a-zA-Z]', '_', self.brand_id.name)}/{re.sub('[^0-9a-zA-Z]', '_', self.name)}/{filename}"
     candle_image = models.ImageField(upload_to=folder_path_candle, blank=True)
 
     isImageAdminApproved = models.BooleanField(default=False)
@@ -83,7 +83,7 @@ class Candle(models.Model):
 
     def __str__(self):
         """ String representation of the candle """
-        return f'{self.name} ({self.maker_id.name})'
+        return f'{self.name} ({self.brand_id.name})'
 
     def get_absolute_url(self):
         return reverse('candle-detail', kwargs={'pk': self.id})
@@ -114,10 +114,44 @@ class Review(models.Model):
 
     class Meta:
         ordering = ['-date_created']
+        unique_together = ('user_id', 'candle_id')
 
     def __str__(self):
         """ String representation of the review """
         return f'{self.user_id} ({self.candle_id.name})'
+
+    report_points = models.IntegerField(default=0, null=False)
+
+    def save(self, *args, **kwargs):
+        super(Review, self).save(*args, **kwargs)
+        if self.report_points == 3:
+            self.isVisible = False
+
+
+class Report(models.Model):
+    """ Report model """
+    user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    report_text = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    REPORT_OPTIONS = (
+        (0, 'default'),
+        (1, 'review report')
+    )
+    report_type = models.IntegerField(choices=REPORT_OPTIONS, default=0)
+
+    review_id = models.ForeignKey(Review, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        ordering = ['-date_created']
+
+    def __str__(self):
+        """ String representation of the report """
+        return f'{self.review_id} ({self.pk})'
+
+    def save(self, *args, **kwargs):
+        super(Report, self).save(*args, **kwargs)
+        self.review_id.report_points += 1
 
 
 class List(models.Model):
@@ -148,6 +182,7 @@ class List(models.Model):
 
     class Meta:
         ordering = ['-date_modified']
+        unique_together = ('user_id', 'name')
 
     def __str__(self):
         """ String representation of the list """

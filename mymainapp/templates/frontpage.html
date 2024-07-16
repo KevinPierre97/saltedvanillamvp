@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Front Page</title>
+{%  endblock %}
+
+{% block content %}
+    <h1>Welcome to ********</h1>
+    <p>Welcome to ******* *******, your home for **********.</p>
+
+    <h2>Records</h2>
+    <p>This * currently has the following records:</p>
+    <ul>
+        <li><strong>C*******:</strong> {{ num_candles }}</li>
+        <li><strong>B*****:</strong> {{ num_brands }}</li>
+        <li><strong>R******:</strong> {{ num_reviews }}</li>
+    </ul>
+{% endblock %}

@@ -20,6 +20,12 @@ from django.conf.urls.static import static
 
 from mymainapp.views import (
     home_screen_view,
+    frontpage_view,
+    CandleList_view,
+    ReviewList_view,
+    candle_detail_view,
+    candle_list_view,
+    about_view,
 )
 
 from usermodel.views import (
@@ -33,6 +39,11 @@ from usermodel.views import (
 urlpatterns = [
     path('sadmin/', admin.site.urls),
     path('', home_screen_view, name="home"),
+    path('home/', frontpage_view, name="frontpage"),
+    path('candles/', candle_list_view, name="candles"),
+    path('reviews/', ReviewList_view.as_view(), name="reviews"),
+    path('candles/<int:pk>/', candle_detail_view, name="candle-detail"),
+    path('about/' , about_view, name="about"),
     path('register/', registration_view, name="register"),
     path('logout/', logout_view, name="logout"),
     path('login/', login_view, name="login"),

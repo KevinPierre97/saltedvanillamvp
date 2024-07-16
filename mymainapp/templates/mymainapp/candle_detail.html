@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-6">
+                <h2> {{ candle.name }}</h2>
+                <img src="/media/{{ candle.candle_image }}" alt="" class="thumbnail">
+            </div>
+            <div class="col-xs-12 col-lg-6">
+                <p>Testing</p>
+                <ul>
+                    {% for note in candle.notes.all %}
+                        <li>{{ note }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <section>
+            <div class="row">
+                {% for review in candle.review_set.all %}
+                    <div class="col-xs-12">
+                        <p> {{ review.user_id.username }}</p>
+                        <p> {{ review.review_text }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </section>
+    </div>
+{% endblock %}

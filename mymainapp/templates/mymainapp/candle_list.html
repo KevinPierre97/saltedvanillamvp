@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Candle List</h1>
+    {% if candle_list %}
+        <ul>
+            {% for candle in candle_list %}
+                <img src="/media/{{ candle.candle_image }}" alt="" class="thumbnail">
+                <li>
+                    <a href="{{ candle.get_absolute_url }}">{{ candle.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no candles in the database. </p>
+    {% endif %}
+{% endblock %}
