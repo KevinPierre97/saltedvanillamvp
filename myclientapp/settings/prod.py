@@ -3,8 +3,10 @@ from .common import *
 DEBUG = False
 SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
+BASE_URL = env.str('BASE_URL', default="https://saltedvanillamvp.applikuapp.com")
 
-LOCKDOWN_PASSWORDS = env('LOCKDOWN_PASSWORDS')
+LOCKDOWN_ENABLED = False
+# LOCKDOWN_PASSWORDS = env('LOCKDOWN_PASSWORDS')
 
 DATABASES = {
     "default": env.db("DATABASE_URL")

@@ -47,18 +47,21 @@ class AccountAuthenticationForm(forms.ModelForm):
 
 
 class AccountUpdateForm(forms.ModelForm):
-
+	# email = forms.EmailField(required=False) # this didn't work. I just added disable to html field
 	class Meta:
 		model = User
-		fields = ('email', 'username', )
+		fields = ( 'username', )
 
-	def clean_email(self):
-		email = self.cleaned_data['email']
-		try:
-			account = User.objects.exclude(pk=self.instance.pk).get(email=email)
-		except User.DoesNotExist:
-			return email
-		raise forms.ValidationError('Email "%s" is already in use.' % account)
+
+
+
+	# def clean_email(self):
+	# 	email = self.cleaned_data['email']
+	# 	try:
+	# 		account = User.objects.exclude(pk=self.instance.pk).get(email=email)
+	# 	except User.DoesNotExist:
+	# 		return email
+	# 	raise forms.ValidationError('Email "%s" is already in use.' % account)
 
 	def clean_username(self):
 		username = self.cleaned_data['username']

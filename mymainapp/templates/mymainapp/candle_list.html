@@ -1,16 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Candle List</h1>
+    <h1 style="text-align: center">Candles</h1>
+{#    <a href="{% url 'candle-add-form' %}" class="btn btn-primary">+Candle</a>#}
     {% if candle_list %}
-        <ul>
-            {% for candle in candle_list %}
-                <img src="/media/{{ candle.candle_image }}" alt="" class="thumbnail">
-                <li>
-                    <a href="{{ candle.get_absolute_url }}">{{ candle.name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="container">
+            <hr>
+            <div class="row">
+                {% for candle in candle_list %}
+                    <div class="col-xs-12 col-lg-4" style="padding: 5vh">
+                        <div class="card" style="width: 100%; height: 100%;">
+                            <a href="{{ candle.get_absolute_url }}">
+                                {% if candle.candle_image %}
+                                    <img src="/media/{{ candle.candle_image }}" alt="" class="card-img-top" style="">
+                                {% else %}
+                                    <img src="/media/defaults/logo2.png" alt="" class="card-img-top">
+                                {% endif %}
+                                
+                            </a>
+                            <div class="card-body text-center align-middle">
+                                <a href="{{ candle.get_absolute_url }}" class="align-middle"> {{ candle.name }} <br>by {{ candle.brand_id }}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        
+        </div>
     {% else %}
         <p>There are no candles in the database. </p>
     {% endif %}

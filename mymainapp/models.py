@@ -108,6 +108,7 @@ class Review(models.Model):
     )
 
     review_text = models.TextField()
+    # title_text = models.TextField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     isVisible = models.BooleanField(default=True, blank=True)
@@ -130,7 +131,8 @@ class Review(models.Model):
 
 class Report(models.Model):
     """ Report model """
-    user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    reporter = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
     report_text = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
 
@@ -141,6 +143,8 @@ class Report(models.Model):
     report_type = models.IntegerField(choices=REPORT_OPTIONS, default=0)
 
     review_id = models.ForeignKey(Review, on_delete=models.CASCADE, null=True, blank=True)
+
+    isReviewed = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-date_created']

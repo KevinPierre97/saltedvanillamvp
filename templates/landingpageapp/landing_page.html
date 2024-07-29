@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block header %}
+
+
+<nav class="navbar navbar-expand bg-light" data-bs-theme="light">
+  <div class="container-fluid">
+      <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+        <p class="navbar-brand text-center align-middle" href="">SV</p>
+      </div>
+  </div>
+</nav>
+
+
+{% endblock %}
+{% block content %}
+    <div class="container text-center">
+        <img src="/media/defaults/landing_page_img.jpg" alt="" style="width: 80%; margin: 6px 6px 6px 6px; align-content: center">
+        <div class="row">
+            <div class="col-lg-6 text-center" style="border-right: 1px solid #000000">
+                <h2>Welcome to Salted Vanilla</h2>
+                <p>We are an online community dedicated to scented candles. We are currently in beta. Please feel free to sign up for our newsletter to get updates about release!</p>
+            </div>
+            <div class="col-lg-6">
+                <h2>Join Us:</h2>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_p }}
+                    </table>
+                    <input class="btn btn-primary" type="submit" value="Submit" >
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block footer %}
+{% endblock %}

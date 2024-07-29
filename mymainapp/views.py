@@ -12,11 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django import forms
 from usermodel.models import User
 from lockdown.decorators import lockdown
-from .models import Brand, Candle, Review
+
+from . import forms
+from .forms import BrandForm, CreateCandleModelForm, ReviewCandleModelForm, ReportReviewModelForm
+from .models import Brand, Candle, Review, Report
 from django.views import generic
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 
 @lockdown()
@@ -44,6 +55,16 @@ def frontpage_view(request):
 
 	return render(request, 'frontpage.html', context=context)
 
+def profile_view(request, usn):
+	""" View function for profile pages """
+	profile = User.objects.get(username=usn)
+	reviews_List = Review.objects.filter(user_id=profile, isVisible=True)
+
+	context = {
+		'profile': profile,
+		'reviews_List': reviews_List,
+	}
+	return render(request, 'mymainapp/profile.html', context=context)
 
 class CandleList_view(generic.ListView):
 	model = Candle
@@ -61,12 +82,15 @@ def candle_list_view(request):
 	}
 	return render(request, 'mymainapp/candle_list.html', context=context)
 
+
 def candle_detail_view(request, pk):
 	""" View function for candle detail page"""
 	try:
 		candle = Candle.objects.get(pk=pk)
+		isReviewed = Review.objects.filter(candle_id=candle, user_id=request.user).exists()
 		context = {
-			'candle': candle
+			'candle': candle,
+			'isReviewed': isReviewed,
 		}
 	except Candle.DoesNotExist:
 		raise Http404('Book does not exist')
@@ -77,4 +101,79 @@ def candle_detail_view(request, pk):
 def about_view(request):
 	""" View function for about page """
 	return render(request, 'mymainapp/about.html')
+
+
+
+
+
+class candle_create_view(SuccessMessageMixin, CreateView):
+	model = Candle
+	form_class = CreateCandleModelForm
+	template_name = 'mymainapp/createcandle_form.html'
+	success_message = "%(name)s was successfully created. Thank you for contributing!"
+
+
+class RedirectToPreviousMixin:
+	default_redirect = '/home'
+
+	def get(self, request, *args, **kwargs):
+		request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+		return super().get(request, *args, **kwargs)
+	def get_success_url(self):
+		return self.request.session['previous_page']
+
+
+class brand_create_view(RedirectToPreviousMixin, SuccessMessageMixin, CreateView):
+	model = Brand
+	form_class = BrandForm
+	# fields = ('name',)
+	template_name = 'mymainapp/brand_form.html'
+	success_message = "%(name)s was successfully created"
+	success_url = reverse_lazy('frontpage')
+
+
+class review_candle_create_view(RedirectToPreviousMixin, LoginRequiredMixin, SuccessMessageMixin, CreateView):
+	model = Review
+	form_class = ReviewCandleModelForm
+	form_class.base_fields['user_id'].disabled = True
+	form_class.base_fields['candle_id'].disabled = True
+	success_message = "Your review has posted successfully. Thank you for contributing!"
+	template_name = 'mymainapp/review_form.html'
+
+	def get_initial(self):
+		initial = super().get_initial()
+		initial['user_id'] = self.request.user
+		initial['candle_id'] = Candle.objects.get(pk=self.kwargs['candle_id'])
+		return initial
+
+
+class report_review_create_view(RedirectToPreviousMixin, CreateView):
+	model = Report
+	form_class = ReportReviewModelForm
+
+	# This section makes the default information disable so users don't have to put in that effort
+	# and so html attacks won't work
+	form_class.base_fields['reporter'].disabled = True
+	form_class.base_fields['review_id'].disabled = True
+	form_class.base_fields['report_type'].disabled = True
+	template_name = 'mymainapp/report_review_form.html'
+
+	# this function defines initial values
+	def get_initial(self):
+		initial = super().get_initial()
+		initial['reporter'] = self.request.user
+		initial['review_id'] = Review.objects.get(pk=self.kwargs['review_id'])
+		initial['report_type'] = self.kwargs['report_type_id']
+		return initial
+
+	#this function is to pass the review to display on form page
+	def get_context_data(self, **kwargs):
+		context = super(report_review_create_view, self).get_context_data(**kwargs)
+		context['review'] = Review.objects.get(pk=self.kwargs['review_id'])
+		return context
+
+	#this function is to hid the default fields to not confuse users
+	# def get_form(self, form_class=None):
+	# 	form = super().get_form(form_class)
+	# 	form.fields['reporter'].widget = forms.HiddenInput()
 

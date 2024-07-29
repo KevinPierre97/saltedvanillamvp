@@ -39,7 +39,7 @@ def registration_view(request):
 
 def logout_view(request):
 	logout(request)
-	return redirect('/')
+	return redirect('/candles')
 
 
 def login_view(request):
@@ -48,7 +48,7 @@ def login_view(request):
 
 	user = request.user
 	if user.is_authenticated:
-		return redirect("home")
+		return redirect("/candles")
 
 	if request.POST:
 		form = AccountAuthenticationForm(request.POST)
@@ -59,7 +59,7 @@ def login_view(request):
 
 			if user:
 				login(request, user)
-				return redirect("home")
+				return redirect("frontpage")
 
 	else:
 		form = AccountAuthenticationForm()
@@ -77,19 +77,23 @@ def account_view(request):
 
 	context = {}
 	if request.POST:
+		# email1 = request.user.email
 		form = AccountUpdateForm(request.POST, instance=request.user)
 		if form.is_valid():
 			form.initial = {
-					"email": request.POST['email'],
+					# "email": request.POST['email'],
 					"username": request.POST['username'],
 			}
-			form.save()
+
+			hello = form.save(commit=False)
+			# hello.email = email1
+			hello.save()
 			context['success_message'] = "Updated"
 	else:
 		form = AccountUpdateForm(
 
 			initial={
-					"email": request.user.email,
+					# "email": request.user.email,
 					"username": request.user.username,
 				}
 			)

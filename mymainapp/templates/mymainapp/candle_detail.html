@@ -1,13 +1,23 @@
 {% extends "base.html" %}
+{% block head_addition %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-lg-6">
-                <h2> {{ candle.name }}</h2>
-                <img src="/media/{{ candle.candle_image }}" alt="" class="thumbnail">
+                <h2> {{ candle.name }}<br>
+                    <small class="text-body-secondary"> by {{ candle.brand_id }}</small>
+                </h2>
+                {% if candle.candle_image %}
+                    <img src="/media/{{ candle.candle_image }}" alt="" style="width: 100%">
+                {% else %}
+                    <img src="/media/defaults/logo2.png" alt="" style="width: 100%">
+                {% endif %}
+                
             </div>
             <div class="col-xs-12 col-lg-6">
-                <p>Testing</p>
+                <h3>Key Notes: </h3>
                 <ul>
                     {% for note in candle.notes.all %}
                         <li>{{ note }}</li>
@@ -15,17 +25,51 @@
                 </ul>
             </div>
         </div>
-
+        
+        {% if isReviewed %}
+            <button type="button" class="btn btn-primary disabled">Reviewed</button>
+        {% else %}
+            <a href="{% url 'review-add-form' candle.pk %}" class="btn btn-primary" style="margin: 5px 5px 5px 5px">+Review</a>
+        {% endif %}
+        <hr>
         <section>
-            <div class="row">
+        <h3>Reviews:</h3>
+            {# I added d-block to this div to make every card/review it's own row without making it wider          #}
+            <div class="row d-block">
+                {% if candle.review_set.all %}
                 {% for review in candle.review_set.all %}
-                    <div class="col-xs-12">
-                        <p> {{ review.user_id.username }}</p>
-                        <p> {{ review.review_text }}</p>
-                    </div>
+                    {% if review.isVisible %}
+                        {# I added col-lg-8 and changed mac-width:100% to control width of card/review                   #}
+                        <div class="card mb-4 col-lg-8" style="max-width: 100%;">
+                          <div class="row g-0">
+                            <div class="col-md-4 text-center">
+                              <a href="{% url 'profile' review.user_id.username %}"> {{ review.user_id.username }} </a>  
+                              <img src="/media/defaults/logo.png" class="img-fluid rounded-start" >
+                              
+                              {% with ''|center:review.rating as range %}
+                              	{% for _ in range %}
+                              		<i class="fa fa-solid fa-star"></i>
+                              	{% endfor %}
+                              {% endwith %}  
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body">
+    {#                            <h5 class="card-title">Card title</h5>#}
+                                <p class="card-text">{{ review.review_text }}</p>
+                                <p class="card-text"><small class="text-muted">{{ review.date_created }}</small></p>
+                                <small><a href="{% url 'report-add-form' 1 review.pk %}">Report</a></small>  
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
+                {% else %}
+                    <p>There are no reviews for this candle.</p>
+                {% endif %}
             </div>
 
         </section>
+        <hr>
     </div>
 {% endblock %}

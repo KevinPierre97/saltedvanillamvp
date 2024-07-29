@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1 style="text-align: center">Add Brand</h1>
+    {#This  div keeps the form from going all the way to edge#}
+    <div class="container"> 
+        <form action="" method="post">
+            {% csrf_token %}
+            <table>
+                {{ form|crispy }}
+            </table>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    
+{% endblock %}

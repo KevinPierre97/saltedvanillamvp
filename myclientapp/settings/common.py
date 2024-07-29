@@ -60,6 +60,7 @@ LOGGING = {
 # Application definition
 
 INSTALLED_APPS = [
+
     'mymainapp',
     'usermodel',
     'landingpageapp',
@@ -71,6 +72,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lockdown',
+
+    'crispy_forms',
+    'crispy_bootstrap5',
+
+    'django_select2',
+    # apparently django_select2 needs more intricate settings (Redis) when multiple servers comes into play
+    'random_username',
+    # This is only needed for generating usernames for beta, it's only use is in make_beta_user command
+
 ]
 
 
@@ -78,6 +88,9 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'usermodel.User'
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -169,3 +182,13 @@ AUTHENTICATION_BACKENDS = (
     'myclientapp.mycustomoidc.mycustomOIDC',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+    messages.DEBUG: 'alert-info',
+}

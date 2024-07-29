@@ -11,6 +11,8 @@ LOCKDOWN_ENABLED = False
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+BASE_URL = "0.0.0.0:8000"
+
 DATABASES = {
     "default": env.db("DATABASE_URL")
     # "default": "postgres://tutorial:tutorial@db/tutorial"

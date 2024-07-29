@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block head_addition %}
+    {{ form.media.css }}
+    <style>
+        select {width: 100%}
+    </style>
+{% endblock %}
+{% block content %}
+    <h1 style="text-align: center">Add Candle</h1>
+    {#This  div keeps the form from going all the way to edge#}
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{ form|crispy }}
+            </table>
+            <input type="submit" class="btn btn-primary" value="Submit" >
+        </form>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        {{ form.media.js }}
+    </div>
+    
+{% endblock %}

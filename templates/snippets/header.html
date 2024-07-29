@@ -8,7 +8,7 @@
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
 {#            class should be nav-link active. I removed active because I don't know how to update it in python and learning it is not a priority for me rn#}
-          <a class="nav-link" href="{% url 'candles' %}">Can
+          <a class="nav-link" href="{% url 'candles' %}">Candles
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
@@ -19,15 +19,20 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username }}</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Account</a>
-                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="{% url 'account_detail' %}">Account</a>
+                <a class="dropdown-item" href="{% url 'profile' request.user.username %}">Profile</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
               </div>
             </li>
+
+            <li>
+                <a href="{% url 'candle-add-form' %}" class="btn btn-primary">+Candle</a>
+            </li>
+
         {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
             </li>
         {% endif %}
 

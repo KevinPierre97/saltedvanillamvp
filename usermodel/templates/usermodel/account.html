@@ -41,9 +41,9 @@
 
   <h1 class="h3 mb-3 font-weight-normal">Account</h1>
 
-  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus value={{account_form.initial.email}}>
+  <input disabled type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" autofocus value={{request.user.email}}>
   
-  <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required
+  <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username"
   value="{{account_form.initial.username}}">
 
   {% for field in account_form %}
@@ -57,7 +57,7 @@
     <div style="color: red">
       <p>{{account_form.non_field_errors}}</p>
     </div>
-      
+
   {% endif %}
 
   {% if success_message %}

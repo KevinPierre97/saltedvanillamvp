@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> {{ profile.username }}'s Profile </h1>
+    {% if user.is_authenticated %}
+        {% if profile.pk == user.pk %}
+            <p>This is your profile</p>
+        {% endif %}
+    {% endif %}
+    {% for review in reviews_List %}
+        <h3>They reviewed: <small><a href="{{ review.candle_id.get_absolute_url }}">{{ review.candle_id.name }} by {{ review.candle_id.brand_id }}</a></small></h3>
+
+        <div class="card mb-4 col-lg-8" style="max-width: 100%;">
+            <div class="row g-0">
+                <div class="col-md-4 text-center">
+                    <p>{{ review.user_id.username }}</p>
+                    <img src="/media/defaults/logo.png" class="img-fluid rounded-start" >
+                    <p>{{ review.rating }}</p>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+    {#                  <h5 class="card-title">Card title</h5>#}
+                        <p class="card-text">{{ review.review_text }}</p>
+                        <p class="card-text"><small class="text-muted">{{ review.date_created }}</small></p>
+                        <small><a href="{% url 'report-add-form' 1 review.pk %}">Report</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

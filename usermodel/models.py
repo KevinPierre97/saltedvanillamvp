@@ -20,6 +20,12 @@ from django.core.mail import send_mail
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
+#These are added for the get_password_reset_url function
+from django import utils
+from django.conf import settings
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.urls import reverse
+
 
 class MyAccountManager(BaseUserManager):
 	def create_user(self, email, username, password=None):
@@ -108,3 +114,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 	def email_user(self, subject, message, from_email=None, **kwargs):
 		send_mail(subject, message, from_email, recipient_list=[self.email], **kwargs)
+
+	def get_password_reset_url(self):
+		base64_encoded_id = utils.http.urlsafe_base64_encode(utils.encoding.force_bytes(self.pk))
+		token = PasswordResetTokenGenerator().make_token(self)
+		reset_url_args = {'uidb64': base64_encoded_id, 'token': token}
+		reset_path = reverse('password_reset_confirm', kwargs=reset_url_args)
+		reset_url = f'{settings.BASE_URL}{reset_path}'
+		return reset_url

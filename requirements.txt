@@ -1,4 +1,4 @@
-django==4.2.13
+django==4.2.14
 social-auth-app-django==5.4.1
 python-jose[cryptography]==3.3.0
 django-environ==0.11.2
@@ -9,3 +9,4 @@ django-lockdown==4.0.0
 pillow==10.3.0
 crispy-bootstrap5==2024.2
 django-crispy-forms==2.2
+django-select2==8.2.0

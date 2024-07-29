@@ -28,4 +28,9 @@ class ListItemAdmin(admin.ModelAdmin):
 
 admin.site.register(ListItem, ListItemAdmin)
 
-admin.site.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    readonly_fields = ('reporter', 'report_type', 'review_id', 'report_text', 'date_created', )
+
+
+admin.site.register(Report, ReportAdmin)
+
