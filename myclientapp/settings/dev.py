@@ -7,6 +7,7 @@ SECRET_KEY = 'django-insecure-cirz^#=8zk8$+goq3nc3@7j_4bt0p^fmw6k+kp=4dx6z!b8pc4
 WHITENOISE_AUTOREFRESH = True
 LOCKDOWN_ENABLED = False
 # LOCKDOWN_PASSWORDS = env('LOCKDOWN_PASSWORDS')
+SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

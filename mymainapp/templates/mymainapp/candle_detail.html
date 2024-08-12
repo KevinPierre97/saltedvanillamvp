@@ -9,8 +9,8 @@
                 <h2> {{ candle.name }}<br>
                     <small class="text-body-secondary"> by {{ candle.brand_id }}</small>
                 </h2>
-                {% if candle.candle_image %}
-                    <img src="/media/{{ candle.candle_image }}" alt="" style="width: 100%">
+                {% if candle.candle_image and candle.isImageAdminApproved %}
+                    <img src="/media/{{ candle.candle_image  }}" alt="" style="width: 100%">
                 {% else %}
                     <img src="/media/defaults/logo2.png" alt="" style="width: 100%">
                 {% endif %}

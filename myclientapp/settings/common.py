@@ -81,6 +81,9 @@ INSTALLED_APPS = [
     'random_username',
     # This is only needed for generating usernames for beta, it's only use is in make_beta_user command
 
+    'django_recaptcha',
+    # package for adding recaptcha v2 to landing page join form
+
 ]
 
 

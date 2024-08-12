@@ -29,6 +29,8 @@ class ScentNote(models.Model):
     name = models.CharField(max_length=255,
                             unique=True,
                             help_text="Name of the scent (use underscores instead of spaces")
+    # genre = models.ForeignKey(ScentGenre, on_delete=models.SET_NULL, null=True, blank=True)
+    # family = models.ForeignKey(ScentFamily, on_delete=models.SET_NULL, null=True, blank=True)
 
     def folder_path_note(self, filename):
         """ Returns the name of the path, which creates a folder for every scent note to store its image"""

@@ -8,6 +8,10 @@ BASE_URL = env.str('BASE_URL', default="https://saltedvanillamvp.applikuapp.com"
 LOCKDOWN_ENABLED = False
 # LOCKDOWN_PASSWORDS = env('LOCKDOWN_PASSWORDS')
 
+RECAPTCHA_PUBLIC_KEY = env.str('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = env.str('RECAPTCHA_PRIVATE_KEY')
+RECAPTCHA_DOMAIN = 'www.recaptcha.net'
+
 DATABASES = {
     "default": env.db("DATABASE_URL")
 }

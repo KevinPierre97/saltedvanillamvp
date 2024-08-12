@@ -110,7 +110,7 @@ class candle_create_view(SuccessMessageMixin, CreateView):
 	model = Candle
 	form_class = CreateCandleModelForm
 	template_name = 'mymainapp/createcandle_form.html'
-	success_message = "%(name)s was successfully created. Thank you for contributing!"
+	success_message = "Candle: %(name)s was successfully created. Thank you for contributing!"
 
 
 class RedirectToPreviousMixin:
@@ -128,7 +128,7 @@ class brand_create_view(RedirectToPreviousMixin, SuccessMessageMixin, CreateView
 	form_class = BrandForm
 	# fields = ('name',)
 	template_name = 'mymainapp/brand_form.html'
-	success_message = "%(name)s was successfully created"
+	success_message = "Brand: %(name)s was successfully created"
 	success_url = reverse_lazy('frontpage')
 
 

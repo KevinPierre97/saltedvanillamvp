@@ -17,10 +17,10 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetCompleteView
+from django.views.generic.base import TemplateView
 
-from landingpageapp.views import(
-    landing_page_view,
-    landing_page_form_view,
+from landingpageapp.views import (
+     landing_page_form_view,
 )
 
 from mymainapp.views import (
@@ -48,9 +48,11 @@ from usermodel.views import (
 
 urlpatterns = [
     path('sadmin/', admin.site.urls),
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path('select2/', include('django_select2.urls')),
     # path('home2/', home_screen_view, name="home"),
     path('', landing_page_form_view.as_view(), name="landing-page"),
+    path('<int:referral_option>/', landing_page_form_view.as_view(), name="landing-page-with-referral"),
     path('home/', frontpage_view, name="frontpage"),
     path('profile/<str:usn>', profile_view, name="profile"),
     path('candles/', candle_list_view, name="candles"),
