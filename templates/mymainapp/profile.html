@@ -2,11 +2,40 @@
 
 {% block content %}
     <h1> {{ profile.username }}'s Profile </h1>
+    <br>
     {% if user.is_authenticated %}
         {% if profile.pk == user.pk %}
             <p>This is your profile</p>
         {% endif %}
     {% endif %}
+    {% if favorites_list %}
+        <h3>Favorites:</h3>
+        <div class="container">
+        <div class="row">
+
+                    {% for list_item in favorites_list.items.all %}
+                        <div class="col-xs-12 col-lg-4">
+                <div class="card mx-auto" style="width: fit-content; height: fit-content;">
+                    {% if list_item.candle_id.candle_image and list_item.candle_id.isImageAdminApproved %}
+                        <img src="/media/{{ list_item.candle_id.candle_image }}" alt="" class="card-img-top mx-auto" style="width:100px">
+                    {% else %}
+                        <img src="/media/defaults/logo2.png" alt="" class="card-img-top">
+                    {% endif %}
+                    <a href={{ list_item.candle_id.get_absolute_url }}>{{ list_item.candle_id.name }}</a>
+                        </div>
+
+
+
+            </div>
+                {% endfor %}
+
+        </div>
+
+        </div>
+
+    {% endif %}
+    <br>
+
     {% for review in reviews_List %}
         <h3>They reviewed: <small><a href="{{ review.candle_id.get_absolute_url }}">{{ review.candle_id.name }} by {{ review.candle_id.brand_id }}</a></small></h3>
 

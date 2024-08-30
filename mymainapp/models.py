@@ -3,6 +3,7 @@ import uuid
 import re
 from django.urls import reverse
 from usermodel.models import User
+from django.core.exceptions import ValidationError
 
 
 class Brand(models.Model):
@@ -15,7 +16,7 @@ class Brand(models.Model):
 
     class Meta:
         ordering = ['name', '-date_added']
-        verbose_name_plural = 'Makers'
+        verbose_name_plural = 'Brands'
 
     def __str__(self):
         return self.name
@@ -24,12 +25,37 @@ class Brand(models.Model):
         return reverse('maker-detail', kwargs={'pk': self.id})
 
 
+class ScentFamily(models.Model):
+    """ Model representing a genre of scent notes"""
+    name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Scent Families'
+
+    def __str__(self):
+        return self.name
+
+
+class ScentGenre(models.Model):
+    """ Model representing a genre of scent notes"""
+    name = models.CharField(max_length=255, unique=True)
+    family = models.ForeignKey(ScentFamily, on_delete=models.CASCADE, null=True, blank=True, related_name='families')
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Scent Genres'
+
+    def __str__(self):
+        return self.name
+
+
 class ScentNote(models.Model):
     """ Model representing a scent note """
     name = models.CharField(max_length=255,
                             unique=True,
                             help_text="Name of the scent (use underscores instead of spaces")
-    # genre = models.ForeignKey(ScentGenre, on_delete=models.SET_NULL, null=True, blank=True)
+    genre = models.ForeignKey(ScentGenre, on_delete=models.SET_NULL, null=True, blank=True, related_name='genres')
     # family = models.ForeignKey(ScentFamily, on_delete=models.SET_NULL, null=True, blank=True)
 
     def folder_path_note(self, filename):
@@ -173,7 +199,8 @@ class List(models.Model):
         (0, 'custom'),
         (1, 'have'),
         (2, 'had'),
-        (3, 'want')
+        (3, 'want'),
+        (4, 'favorites')
     )
 
     list_type = models.IntegerField(
@@ -197,10 +224,25 @@ class List(models.Model):
     def get_absolute_url(self):
         return reverse('list-detail', args=[self.pk])
 
+    def get_or_none(self, **kwargs):
+        try:
+            return self.objects.get(**kwargs)
+        except self.MultipleObjectsReturned as e:
+            print('ERR====>', e)
+
+        except self.DoesNotExist:
+            return None
+
+
+def limit_favorites_listitems(value):
+    if ListItem.objects.filter(list_id=value, list_id__list_type=4).count() >=3:
+    # if ListItem.objects.filter(list_id=value, list_id.list_type=4).count() >=4:
+        raise ValidationError('You have reached the maximum number of candles you can add to your favorites list.')
+
 
 class ListItem(models.Model):
     """ Model representing a single item of a list """
-    list_id = models.ForeignKey(List, on_delete=models.CASCADE)
+    list_id = models.ForeignKey(List, on_delete=models.CASCADE, related_name='items', validators=[limit_favorites_listitems,])
     candle_id = models.ForeignKey(Candle, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
 

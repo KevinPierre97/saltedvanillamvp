@@ -1,8 +1,17 @@
 from django.contrib import admin
-from .models import Brand, ScentNote, Candle, Review, List, ListItem, Report
+from .models import Brand, ScentNote, Candle, Review, List, ListItem, Report, ScentGenre, ScentFamily
 
-admin.site.register(Brand)
+
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+admin.site.register(Brand, BrandAdmin)
+
+admin.site.register(ScentFamily)
+admin.site.register(ScentGenre)
 admin.site.register(ScentNote)
+
 
 
 class CandleAdmin(admin.ModelAdmin):

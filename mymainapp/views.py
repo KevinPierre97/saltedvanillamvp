@@ -21,7 +21,7 @@ from lockdown.decorators import lockdown
 
 from . import forms
 from .forms import BrandForm, CreateCandleModelForm, ReviewCandleModelForm, ReportReviewModelForm
-from .models import Brand, Candle, Review, Report
+from .models import Brand, Candle, Review, Report, List
 from django.views import generic
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -55,14 +55,21 @@ def frontpage_view(request):
 
 	return render(request, 'frontpage.html', context=context)
 
+
 def profile_view(request, usn):
 	""" View function for profile pages """
 	profile = User.objects.get(username=usn)
 	reviews_List = Review.objects.filter(user_id=profile, isVisible=True)
+	try:
+		favorites_list = List.objects.get(user_id=profile, list_type=4)
+	except List.DoesNotExist:
+		favorites_list = None
+
 
 	context = {
 		'profile': profile,
 		'reviews_List': reviews_List,
+		'favorites_list': favorites_list,
 	}
 	return render(request, 'mymainapp/profile.html', context=context)
 
