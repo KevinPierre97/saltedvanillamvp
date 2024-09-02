@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h1 style="text-align: center">Search</h1>
+    <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+{#    {% for obj in filter.qs %}#}
+{#        {{ obj.name }} - {{ obj.brand_id }}<br />#}
+{#    {% endfor %}#}
+    <div class="container">
+
+            <div class="row">
+                {% for candle in filter.qs %}
+                    <div class="col-xs-12 col-lg-4" style="padding: 5vh">
+                        <div class="card" style="width: 100%; height: 100%;">
+                            <a href="{{ candle.get_absolute_url }}">
+                                {% if candle.candle_image and candle.isImageAdminApproved %}
+                                    <img src="/media/{{ candle.candle_image }}" alt="" class="card-img-top" style="">
+                                {% else %}
+                                    <img src="/media/defaults/logo2.png" alt="" class="card-img-top">
+                                {% endif %}
+
+                            </a>
+                            <div class="card-body text-center align-middle">
+                                <a href="{{ candle.get_absolute_url }}" class="align-middle"> {{ candle.name }} <br>by {{ candle.brand_id }}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    <hr>
+{% endblock %}

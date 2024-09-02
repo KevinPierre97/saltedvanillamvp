@@ -84,6 +84,10 @@ INSTALLED_APPS = [
     'django_recaptcha',
     # package for adding recaptcha v2 to landing page join form
 
+    #'easyaudit'
+    # needed for django-easy-audit
+    #getting an error
+
 ]
 
 
@@ -105,6 +109,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    # 'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
 ]
 
 ROOT_URLCONF = 'myclientapp.urls'

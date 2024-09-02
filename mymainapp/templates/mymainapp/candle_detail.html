@@ -31,6 +31,13 @@
         {% else %}
             <a href="{% url 'review-add-form' candle.pk %}" class="btn btn-primary" style="margin: 5px 5px 5px 5px">+Review</a>
         {% endif %}
+    
+        {% if favorite_item %}
+            <a href="{% url 'listitem-delete-form' favorite_item.pk %}" class="btn btn-outline-danger" style="margin: 5px 5px 5px 5px">-Favorites</a>
+        {% else %}
+            <a href="{% url 'listiem-add-form' 4 candle.pk %}" class="btn btn-secondary" style="margin: 5px 5px 5px 5px">+Favorites</a>
+        {% endif %}
+        
         <hr>
         <section>
         <h3>Reviews:</h3>

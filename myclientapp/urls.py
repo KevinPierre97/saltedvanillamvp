@@ -36,6 +36,9 @@ from mymainapp.views import (
     candle_create_view,
     review_candle_create_view,
     report_review_create_view,
+    listiem_add_create_view,
+    listitem_delete_view,
+    candle_filter_search,
 )
 
 from usermodel.views import (
@@ -63,6 +66,9 @@ urlpatterns = [
     path('candles/add/', candle_create_view.as_view(), name="candle-add-form"),
     path('candles/review/add/<int:candle_id>', review_candle_create_view.as_view(), name="review-add-form"),
     path('reports/add/<int:report_type_id>/<int:review_id>', report_review_create_view.as_view(), name="report-add-form"),
+    path('candles/list/add/<int:list_type>/<int:candle_id>', listiem_add_create_view.as_view(), name="listiem-add-form"),
+    path('candles/list/delete/<int:pk>', listitem_delete_view.as_view(), name="listitem-delete-form"),
+    path('candles/search', candle_filter_search, name='candle-search'),
     # path('candles/listitems/add/<int:candle_id>')
     path('register/', registration_view, name="register"),
     path('logout/', logout_view, name="logout"),

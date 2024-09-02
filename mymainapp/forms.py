@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Brand, Candle, Review, Report
+from .models import Brand, Candle, Review, Report, ListItem
 from django.urls import reverse_lazy, reverse
 from django_select2 import forms as s2forms
 from django.utils.translation import gettext_lazy as _
@@ -42,6 +42,7 @@ class CreateCandleModelForm(ModelForm):
         help_texts = {
             'brand_id': 'Add Brand. If the brand is not listed, Click Here to add it',
             'candle_image': _('Optional: Upload a photo you took of the candle label'),
+            'notes': 'Enter in the fragrance notes sometimes listed on the label of the candle'
         }
         widgets = {
             'notes': ScentNotesWidget
@@ -75,4 +76,15 @@ class ReportReviewModelForm(ModelForm):
             'reporter': forms.HiddenInput(),
             'review_id': forms.HiddenInput(),
             'report_type': forms.HiddenInput(),
+        }
+
+
+class ListItemModelForm(ModelForm):
+
+    class Meta:
+        model = ListItem
+        fields = ['list_id', 'candle_id']
+        widgets = {
+            'list_id': forms.HiddenInput,
+            'candle_id': forms.HiddenInput,
         }

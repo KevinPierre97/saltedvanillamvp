@@ -13,14 +13,17 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="{% url 'candle-search' %}">Search</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'about' %}">About</a>
         </li>
         {% if user.is_authenticated %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username }}</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'account_detail' %}">Account</a>
                 <a class="dropdown-item" href="{% url 'profile' request.user.username %}">Profile</a>
+                <a class="dropdown-item" href="{% url 'account_detail' %}">Account</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
               </div>

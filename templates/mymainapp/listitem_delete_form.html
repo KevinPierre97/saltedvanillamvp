@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>Remove from list</h1>
+    <div class="container">
+         <form action="" method="post">
+            {% csrf_token %}
+            <table>
+                {{ form|crispy }}
+            </table>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+
+{% endblock %}

@@ -15,7 +15,7 @@ admin.site.register(ScentNote)
 
 
 class CandleAdmin(admin.ModelAdmin):
-    list_display = ('name', 'brand_id', 'date_added')
+    list_display = ('name', 'brand_id', 'date_modified')
     readonly_fields = ('gid',)
 
 
@@ -28,11 +28,15 @@ class ReviewAdmin(admin.ModelAdmin):
 
 admin.site.register(Review, ReviewAdmin)
 
-admin.site.register(List)
+class ListAdmin(admin.ModelAdmin):
+    list_display = ('user_id', 'name', 'list_type', 'isActive',)
+    readonly_fields = ('gid',)
+admin.site.register(List, ListAdmin)
 
 
 class ListItemAdmin(admin.ModelAdmin):
     list_display = ('candle_id', 'list_id')
+
 
 
 admin.site.register(ListItem, ListItemAdmin)
