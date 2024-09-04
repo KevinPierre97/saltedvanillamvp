@@ -100,7 +100,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 DJANGO_EASY_AUDIT_UNREGISTERED_URLS_DEFAULT = [r'^/sadmin/', r'^/static/', r'^/favicon.ico$', r'^/media/candle_pics/',]
-DJANGO_EASY_AUDIT_WATCH_MODEL_EVENTS = False
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

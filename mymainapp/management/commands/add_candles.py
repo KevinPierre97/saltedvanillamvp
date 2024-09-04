@@ -121,7 +121,7 @@ class Command(BaseCommand):
                 candle.save()
                 self.stdout.write(f'Added candle: {candle.name}')
                 #########ADD IMAGES###################################
-                img_path = "candle_pics/"+str(int(str(index)) + 2) + ".jpg"
+                img_path = "candle_pics/" + str(int(str(index)) + 2) + ".jpg"
                 candle.candle_image = img_path
                 candle.save()
                 self.stdout.write('Added image')
