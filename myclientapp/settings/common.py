@@ -84,7 +84,7 @@ INSTALLED_APPS = [
     'django_recaptcha',
     # package for adding recaptcha v2 to landing page join form
 
-    #'easyaudit'
+    'easyaudit'
     # needed for django-easy-audit
     #getting an error
 
@@ -99,6 +99,9 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+DJANGO_EASY_AUDIT_UNREGISTERED_URLS_DEFAULT = [r'^/sadmin/', r'^/static/', r'^/favicon.ico$', r'^/media/candle_pics/',]
+DJANGO_EASY_AUDIT_WATCH_MODEL_EVENTS = False
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -109,7 +112,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-    # 'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
+    'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
 ]
 
 ROOT_URLCONF = 'myclientapp.urls'

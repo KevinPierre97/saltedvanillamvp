@@ -15,6 +15,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django import forms
 from usermodel.models import User
@@ -85,14 +86,21 @@ class ReviewList_view(generic.ListView):
 	model = Review
 	template_name = 'mymainapp/review_list.html'
 
+@login_required(login_url='/login/')
 def candle_list_view(request):
 	candle_list = Candle.objects.all()
+	paginator = Paginator(candle_list, 30)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+
 	context = {
-		'candle_list': candle_list
+		'candle_list': candle_list,
+		'page_obj': page_obj,
 	}
 	return render(request, 'mymainapp/candle_list.html', context=context)
 
 
+@login_required(login_url='/login/')
 def candle_detail_view(request, pk):
 	""" View function for candle detail page"""
 	try:
@@ -232,6 +240,7 @@ class listitem_delete_view(RedirectToPreviousMixin, LoginRequiredMixin, SuccessM
 	# 		return HttpResponseRedirect(reverse_lazy('candles'))
 
 
+@login_required(login_url='/login/')
 def candle_filter_search(request):
 	filtered = CandleFilter(request.GET, queryset=Candle.objects.all())
 	return render(request, 'mymainapp/candle_filter_search.html', {'filter': filtered})
