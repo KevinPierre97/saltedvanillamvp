@@ -11,27 +11,61 @@
 {#        {{ obj.name }} - {{ obj.brand_id }}<br />#}
 {#    {% endfor %}#}
     <div class="container">
-
-            <div class="row">
-                {% for candle in filter.qs %}
-                    <div class="col-xs-12 col-lg-4" style="padding: 5vh">
-                        <div class="card" style="width: 100%; height: 100%;">
-                            <a href="{{ candle.get_absolute_url }}">
-                                {% if candle.candle_image and candle.isImageAdminApproved %}
-                                    <img src="/media/{{ candle.candle_image }}" alt="" class="card-img-top" style="">
-                                {% else %}
-                                    <img src="/media/defaults/logo2.png" alt="" class="card-img-top">
-                                {% endif %}
-
-                            </a>
-                            <div class="card-body text-center align-middle">
-                                <a href="{{ candle.get_absolute_url }}" class="align-middle"> {{ candle.name }} <br>by {{ candle.brand_id }}</a>
-                            </div>
+        <div class="row">
+            {% for candle in filter.qs %}
+                <div class="col-xs-12 col-lg-4" style="padding: 5vh">
+                    <div class="card" style="width: 100%; height: 100%;">
+{#                        <a href="{{ candle.get_absolute_url }}">#}
+{#                            {% if candle.candle_image and candle.isImageAdminApproved %}#}
+{#                                <img src="/media/{{ candle.candle_image }}" alt="" class="card-img-top" style="">#}
+{#                            {% else %}#}
+{#                                <img src="/media/defaults/logo2.png" alt="" class="card-img-top">#}
+{#                            {% endif %}#}
+{##}
+{#                        </a>#}
+                        <div class="card-body text-center align-middle">
+                            <a href="{{ candle.get_absolute_url }}" class="align-middle"> {{ candle.name }} <br>by {{ candle.brand_id }}</a>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-
+                </div>
+            {% endfor %}
         </div>
+    </div>
+{#     <nav class="blog-pagination justify-content-center d-flex">#}
+{#        <ul class="pagination">#}
+{#            {% if page_obj.has_previous %}#}
+{#            <li class="page-item">#}
+{#                <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">#}
+{#                    <span aria-hidden="true">#}
+{#                        <span class="ti-arrow-left"></span>#}
+{#                    </span>#}
+{#                </a>#}
+{#            </li>#}
+{#            {% endif %}#}
+{##}
+{#        {% for num in page_obj.paginator.page_range %}#}
+{#            {% if page_obj.number == num %}#}
+{#            <li class="page-item active">#}
+{#                <a href="{{ request.get_full_path }}&page={{ num }}">{{ num }}</a>#}
+{#            </li>#}
+{#            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}#}
+{#            <li class="page-item">#}
+{#                <a href="{{ request.get_full_path }}&page={{ num }}">{{ num }}</a>#}
+{#            </li>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+{##}
+{#        {% if page_obj.has_next %}#}
+{#            <li class="page-item">#}
+{#                <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">#}
+{#                    <span aria-hidden="true">#}
+{#                        <span class="ti-arrow-right"></span>#}
+{#                    </span>#}
+{#                </a>#}
+{#            </li>#}
+{#        {% endif %}#}
+{#        </ul>#}
+{#    </nav>#}
+
     <hr>
 {% endblock %}

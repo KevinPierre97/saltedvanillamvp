@@ -10,7 +10,7 @@
                     <small class="text-body-secondary"> by {{ candle.brand_id }}</small>
                 </h2>
                 {% if candle.candle_image and candle.isImageAdminApproved %}
-                    <img src="/media/{{ candle.candle_image  }}" alt="" style="width: 100%">
+                    <img src="/media/{{ candle.candle_image  }}" alt="" style="width: 100%;">
                 {% else %}
                     <img src="/media/defaults/logo2.png" alt="" style="width: 100%">
                 {% endif %}
@@ -42,6 +42,7 @@
         <section>
         <h3>Reviews:</h3>
             {# I added d-block to this div to make every card/review it's own row without making it wider          #}
+            <div class="container">
             <div class="row d-block">
                 {% if candle.review_set.all %}
                 {% for review in candle.review_set.all %}
@@ -74,6 +75,7 @@
                 {% else %}
                     <p>There are no reviews for this candle.</p>
                 {% endif %}
+            </div>
             </div>
 
         </section>

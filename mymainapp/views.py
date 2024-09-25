@@ -15,6 +15,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django import forms
@@ -243,4 +244,19 @@ class listitem_delete_view(RedirectToPreviousMixin, LoginRequiredMixin, SuccessM
 @login_required(login_url='/login/')
 def candle_filter_search(request):
 	filtered = CandleFilter(request.GET, queryset=Candle.objects.all())
-	return render(request, 'mymainapp/candle_filter_search.html', {'filter': filtered})
+	# paginator = Paginator(filtered.qs, 9)
+	# page_number = request.GET.get('page')
+	# page_obj = paginator.get_page(page_number)
+	# try:
+	# 	page_obj = paginator.page(page_number)
+	# except PageNotAnInteger:
+	# 	page_obj = paginator.page(1)
+	# except EmptyPage:
+	# 	page_obj = paginator.page(paginator.num_pages)
+
+	context = {
+		#'request': request,
+		'filter': filtered,
+		#'page_obj': page_obj,
+	}
+	return render(request, 'mymainapp/candle_filter_search.html', context=context)
