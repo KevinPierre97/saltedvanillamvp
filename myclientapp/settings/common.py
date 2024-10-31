@@ -99,7 +99,18 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-DJANGO_EASY_AUDIT_UNREGISTERED_URLS_DEFAULT = [r'^/sadmin/', r'^/static/', r'^/favicon.ico$', r'^/media/candle_pics/',]
+DJANGO_EASY_AUDIT_UNREGISTERED_URLS_DEFAULT = [
+    r'^/sadmin/', r'^/static/', r'^/favicon.ico$', r'^/media/candle_pics/',
+    r'^//blog/wp-includes/wlwmanifest.xml', r'^//web/wp-includes/wlwmanifest.xml',
+    r'^/static/css', r'^/static/js', r'^//wordpress/wp-includes/wlwmanifest.xml',
+    r'^//2020/wp-includes/wlwmanifest.xml', r'^//2019/wp-includes/wlwmanifest.xml',
+    r'^//2021/wp-includes/wlwmanifest.xml', r'^//shop/wp-includes/wlwmanifest.xml',
+    r'^//wp1/wp-includes/wlwmanifest.xml', r'^//test/wp-includes/wlwmanifest.xml',
+    r'^//site/wp-includes/wlwmanifest.xml', r'^//cms/wp-includes/wlwmanifest.xml'
+    r'^//wp-includes/ID3/license.txt', r'^//feed/', r'^//feed/atom/', r'^//xmlrpc.php',
+    r'^//cms/wp-includes/wlwmanifest.xml', r'^/wp-json/wp/v2/users', r'^//wp-includes/ID3/license.txt',
+    r'^/.env', r'^/nice ports,/Trinity.txt.bak', r'^/.git/config',
+]
 
 
 MIDDLEWARE = [
@@ -175,6 +186,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
 WHITENOISE_USE_FINDERS = True
 

@@ -7,7 +7,7 @@ User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = 'Creates user with email argument and generates a password reset link'
+    help = 'Creates user with email argument and generates a password reset link. If duplicate key error for username occurs, just run it again'
 
     def add_arguments(self, parser):
         parser.add_argument('email_id', type=str)

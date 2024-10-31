@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block head_addition %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+    <h1 style="text-align: center">Reviews</h1>
+    <div class="container">
+        <hr>
+    </div>
+    
+    {% if reviews_list %}
+        {% for review in reviews_list %}
+            <div class="container">
+            <div class="card mb-4 col-lg-8 mx-auto" style="max-width: 100%;">
+                <div class="row g-0">
+                    <h4 class="card-header">{{ review.user_id.username }} reviewed: <small><a href="{{ review.candle_id.get_absolute_url }}">{{ review.candle_id.name }} by {{ review.candle_id.brand_id }}</a></small></h4>
+                    <div class="col-md-4 text-center">
+                        <p>{{ review.user_id.username }}</p>
+                        <img src="/media/defaults/logo.png" class="img-fluid rounded-start" >
+                        {% with ''|center:review.rating as range %}
+                            {% for _ in range %}
+                                <i class="fa fa-solid fa-star"></i>
+                            {% endfor %}
+                        {% endwith %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+        {#                  <h5 class="card-title">Card title</h5>#}
+                            <p class="card-text">{{ review.review_text }}</p>
+                            <p class="card-text"><small class="text-muted">{{ review.date_created }}</small></p>
+                            {% if user.is_authenticated %}
+                                <small><a href="{% url 'report-add-form' 1 review.pk %}">Report</a></small>
+                                {% if profile.pk == user.pk %}
+                                    <br>
+                                    <a href="{% url 'review-update' review.pk %}">Update</a>
+                                    <br>
+                                    <a href="{% url 'review-delete' review.pk %}">Delete</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <br>
+        {% endfor %}
+        <nav class="blog-pagination justify-content-center d-flex">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">
+                            <span class="ti-arrow-left"></span>
+                        </span>
+                    </a>
+                </li>
+                {% endif %}
+        
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active">
+                    <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                    <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+        
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">
+                        <span aria-hidden="true">
+                            <span class="ti-arrow-right"></span>
+                        </span>
+                    </a>
+                </li>
+            {% endif %}
+            </ul>
+        </nav>
+    {% else %}
+        <p>There are no reviews. or error</p>
+    {% endif %}
+{% endblock %}

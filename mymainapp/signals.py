@@ -13,6 +13,21 @@ def create_favorites_list(sender, instance, created, **kwargs):
             name='favorites',
             list_type=4,
         )
+        List.objects.create(
+            user_id=instance,
+            name='had',
+            list_type=2
+        )
+        List.objects.create(
+            user_id=instance,
+            name='want',
+            list_type=3,
+        )
+        List.objects.create(
+            user_id=instance,
+            name='have',
+            list_type=1
+        )
 
 
 @receiver(post_save, sender=Review)
@@ -22,3 +37,5 @@ def update_candle_date_modified(sender, instance, created, **kwargs):
             pk=instance.candle_id.pk
         )
         candle.save()
+
+# Possibly add another update when a list item is created

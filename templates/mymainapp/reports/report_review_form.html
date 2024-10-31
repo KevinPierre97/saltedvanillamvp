@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Report</h1>
-    <p>{{ review }}</p>
+    <p>{{ review.user_id.username }}</p>
     <p>{{ review.review_text }}</p>
     <form action="" method="post">
         {% csrf_token %}

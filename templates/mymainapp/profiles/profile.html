@@ -1,15 +1,19 @@
 {% extends "base.html" %}
-
+{% block head_addition %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 {% block content %}
     <h1> {{ profile.username }}'s Profile </h1>
     <br>
     {% if user.is_authenticated %}
         {% if profile.pk == user.pk %}
-            <p>This is your profile</p>
+            <p>This is your profile.</p>
         {% endif %}
     {% endif %}
+    {# ################### Favorites ############################## #}
+    <h3>Favorites:</h3>
     {% if favorites_list %}
-        <h3>Favorites:</h3>
+        
         <div class="container">
         <div class="row">
 
@@ -32,9 +36,10 @@
         </div>
 
         </div>
-
     {% endif %}
+    {# ############################################################### #}
     <br>
+    {# ################### Lists ############################## #}
     <h3>Lists:</h3>
     <div class="container">
         <div class="accordion" id="accordionExample">
@@ -46,11 +51,11 @@
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-          {% if favorites_list %}
+          {% if have_list %}
         <div class="container">
         <div class="row">
 
-                    {% for list_item in favorites_list.items.all %}
+                    {% for list_item in have_list.items.all %}
                         <div class="col-xs-4 col-lg-2">
                 <div class="card mx-auto" style="width: fit-content; height: fit-content;">
                     {% if list_item.candle_id.candle_image and list_item.candle_id.isImageAdminApproved %}
@@ -69,7 +74,8 @@
         </div>
 
         </div>
-
+    {% else %}
+      <p>There are no candles in this list.</p>        
     {% endif %}
         </div>
     </div>
@@ -82,8 +88,27 @@
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
+          {% if want_list %}
+        <div class="container">
+        <div class="row">
+                    {% for list_item in want_list.items.all %}
+                        <div class="col-xs-4 col-lg-2">
+                <div class="card mx-auto" style="width: fit-content; height: fit-content;">
+                    {% if list_item.candle_id.candle_image and list_item.candle_id.isImageAdminApproved %}
+                        <img src="/media/{{ list_item.candle_id.candle_image }}" alt="" class="card-img-top mx-auto" style="width:100px">
+                    {% else %}
+                        <img src="/media/defaults/logo2.png" alt="" class="card-img-top">
+                    {% endif %}
+                    <a href={{ list_item.candle_id.get_absolute_url }}>{{ list_item.candle_id.name }}</a>
+                        </div>
+                </div>
+                    {% endfor %}
+            </div>
+            </div>
+        {% else %}
+          <p>There are no candles in this list.</p>        
+        {% endif %}
+            </div>
     </div>
   </div>
   <div class="accordion-item">
@@ -94,11 +119,32 @@
     </h2>
     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
+          {% if had_list %}
+        <div class="container">
+        <div class="row">
+                    {% for list_item in had_list.items.all %}
+                        <div class="col-xs-4 col-lg-2">
+                <div class="card mx-auto" style="width: fit-content; height: fit-content;">
+                    {% if list_item.candle_id.candle_image and list_item.candle_id.isImageAdminApproved %}
+                        <img src="/media/{{ list_item.candle_id.candle_image }}" alt="" class="card-img-top mx-auto" style="width:100px">
+                    {% else %}
+                        <img src="/media/defaults/logo2.png" alt="" class="card-img-top">
+                    {% endif %}
+                    <a href={{ list_item.candle_id.get_absolute_url }}>{{ list_item.candle_id.name }}</a>
+                        </div>
+                </div>
+                    {% endfor %}
+            </div>
+            </div>
+        {% else %}
+          <p>There are no candles in this list.</p>        
+        {% endif %}
+            </div>
     </div>
   </div>
 </div>
+        <br>
+        {# ################################################################### #}
     </div>
     {% for review in reviews_List %}
         <h3>They reviewed: <small><a href="{{ review.candle_id.get_absolute_url }}">{{ review.candle_id.name }} by {{ review.candle_id.brand_id }}</a></small></h3>
@@ -108,14 +154,26 @@
                 <div class="col-md-4 text-center">
                     <p>{{ review.user_id.username }}</p>
                     <img src="/media/defaults/logo.png" class="img-fluid rounded-start" >
-                    <p>{{ review.rating }}</p>
+                    {% with ''|center:review.rating as range %}
+                        {% for _ in range %}
+                            <i class="fa fa-solid fa-star"></i>
+                        {% endfor %}
+                    {% endwith %}
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
     {#                  <h5 class="card-title">Card title</h5>#}
                         <p class="card-text">{{ review.review_text }}</p>
                         <p class="card-text"><small class="text-muted">{{ review.date_created }}</small></p>
-                        <small><a href="{% url 'report-add-form' 1 review.pk %}">Report</a></small>
+                        {% if user.is_authenticated %}
+                            <small><a href="{% url 'report-add-form' 1 review.pk %}">Report</a></small>
+                            {% if profile.pk == user.pk %}
+                                <br>
+                                <a href="{% url 'review-update' review.pk %}">Update</a>
+                                <br>
+                                <a href="{% url 'review-delete' review.pk %}">Delete</a>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

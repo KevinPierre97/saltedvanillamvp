@@ -1,0 +1,48 @@
+Preamble:
+
+On September 25, 2024 the structure of the project has changed in order to better support the scope.
+
+What once was, and what you might be used to, are four separate files you can add to for added functionality.
+
+Those four files are: models.py, views.py, forms.py, and admin.py
+
+They are now python packages: models, views, forms, and admin
+
+They have been changed to make files length smaller and thus easier to understand.
+
+This split was only done on mymainapp, because it is the main app and the others aren't important or nearly as long
+
+
+----------------------------------------------
+
+To update segments of a model, view, form, or admin view
+
+Simply open the respective folder and click on the file with the name that makes most sense.
+
+There you will find the code to update. Don't forget to save changes.
+
+--------------------------------------
+
+To add new models, views, forms, or admin views
+
+Simply open the respective folder
+
+Click on the file with the name that makes most sense.
+If the new segment of code doesn't fit nicely in any previous file, feel free to create another .py python file
+
+Type out the code. Import the segment into the respective __init__.py file. Add the name into __all__ if the segment
+is to be imported for use in other sections of the project. Don't forget to save changes.
+
+--------------------------------
+
+Templates are stored in the templates file in the root folder, under the app name, and under the view file name
+
+--------------------------------
+Tips on file naming conventions:
+
+Model files are named by topic
+View files are named by topic
+
+Admin views follow Model file naming
+Template folders follow view file naming
+
