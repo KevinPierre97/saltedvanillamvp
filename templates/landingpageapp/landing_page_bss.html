@@ -1,0 +1,122 @@
+{% extends "snippets/base_bss.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block head_addition %}
+    <style>
+        .g-recaptcha {
+            display: inline-block;
+            margin: 0 auto;
+            
+        }
+        
+        #form-button {
+            border-radius: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<!-- Start: Navbar Centered Brand -->
+<nav class="navbar navbar-expand-md bg-body py-3">
+    <div class="container"><a class="navbar-brand d-flex align-items-center mx-auto" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-double-down">
+                    <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                    <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                </svg></span><span>SV</span></a>
+        <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-4">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="#"></a></li>
+                <li class="nav-item"><a class="nav-link" href="#"></a></li>
+            </ul>
+            <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Button</button><button class="btn btn-primary" type="button">Button</button></div>
+        </div>
+        <div class="d-none d-md-block"><button class="btn btn-light me-2" type="button"></button></div>
+    </div>
+</nav><!-- End: Navbar Centered Brand -->
+<!-- Start: Hero Parallax -->
+<section>
+    <!-- Start: Parallax Background -->
+    <div data-bss-parallax-bg="true" style="height: 600px;background: url(/media/defaults/landing_page_img.jpg) center / cover, url(https://cdn.bootstrapstudio.io/placeholders/1400x800.png);">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-md-6 offset-xxl-0 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                    <div style="max-width: 350px;background: var(--bs-body-bg);text-align: center;border-radius: 7px;">
+                        <h1 class="text-uppercase fw-bold" style="margin-top: 7px;">Welcome to Salted Vanilla</h1>
+                        <p class="my-3">Your new home for everything scented candles!</p><a class="btn btn-outline-primary btn-lg" role="button" href="#" style="margin-left: 10px;margin-right: 10px;margin-top: 10px;margin-bottom: 10px;border-radius: 5px;">Sign up for Beta</a><a class="btn btn-primary btn-lg me-2" role="button" href="#" style="padding-left: 18px;padding-right: 18px;margin-top: 9px;margin-bottom: 9px;margin-left: 9px;margin-right: 9px;border-radius: 5px;padding-top: 8px;padding-bottom: 8px;">Go to Site</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End: Parallax Background -->
+</section><!-- End: Hero Parallax -->
+<!-- Start: Features Cards -->
+<div class="container py-4 py-xl-5">
+    <div class="row mb-5">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+            <h2>Welcome to Salted Vanilla</h2>
+            <p class="w-lg-50">Salted Vanilla is a scented candle cataloguing website. Think of it like Fragrantica but for scented candles. We are currently in the building stages and are looking for interested persons who want to shape how the finish product turns out. Please click sign up for beta if you want to be one of those individuals! Thank you for inquiring Salted Vanilla!</p>
+        </div>
+    </div>
+    <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4963 2.13176C10.1889 1.95608 9.81146 1.95608 9.50403 2.13176L2.50403 6.13176C2.02451 6.40577 1.85792 7.01662 2.13193 7.49614C2.31631 7.81881 2.65322 7.99979 3 8.00017V15C2.44772 15 2 15.4477 2 16C2 16.5523 2.44772 17 3 17H17C17.5523 17 18 16.5523 18 16C18 15.4477 17.5523 15 17 15V8.00017C17.3469 7.99991 17.684 7.81892 17.8684 7.49614C18.1424 7.01662 17.9758 6.40577 17.4963 6.13176L10.4963 2.13176ZM6 9C5.44772 9 5 9.44772 5 10V13C5 13.5523 5.44772 14 6 14C6.55228 14 7 13.5523 7 13V10C7 9.44772 6.55228 9 6 9ZM9 10C9 9.44772 9.44772 9 10 9C10.5523 9 11 9.44772 11 10V13C11 13.5523 10.5523 14 10 14C9.44772 14 9 13.5523 9 13V10ZM14 9C13.4477 9 13 9.44772 13 10V13C13 13.5523 13.4477 14 14 14C14.5523 14 15 13.5523 15 13V10C15 9.44772 14.5523 9 14 9Z" fill="currentColor"></path>
+                        </svg></div>
+                    <h4 class="card-title">Browse Candles</h4>
+                    <p class="card-text">already added to the website. Or you can add your own to add into your own Collection.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
+                            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"></path>
+                        </svg></div>
+                    <h4 class="card-title">Share your collection</h4>
+                    <p class="card-text">by adding candles to your lists and sharing your profile page link!</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
+                            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+                            <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path>
+                        </svg></div>
+                    <h4 class="card-title">Search for candles</h4>
+                    <p class="card-text">Using our smart search feature, you can search candles by scent!</p>
+                </div>
+            </div>
+        </div>
+    </div><!-- Start: Newsletter Subscription Centered -->
+    <section class="newsletter-subscribe py-4 py-xl-5">
+        <div class="container">
+            <div class="row mb-2">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2 class="display-6 fw-bold">Subscribe to our newsletter</h2>
+                    <p class="text-muted">If you aren't interested in trying out our beta, but you would like to use the final product, then subscribe to out newsletter to be notified when the final product is out!</p>
+                </div>
+            </div>
+            <form class="d-flex justify-content-center flex-wrap text-center" action="" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    {% csrf_token %}
+                    <table>
+                        {{ form|crispy }}
+                    </table>
+                    <button class="btn btn-primary mx-auto" id="form-button" type="submit"> Subscribe </button>
+                </div>
+{#                <div class="mb-3"><button class="btn btn-primary ms-2" type="submit">Subscribe </button></div>#}
+            </form>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            {{ form.media.js }}
+        </div>
+    </section><!-- End: Newsletter Subscription Centered -->
+</div><!-- End: Features Cards -->
+{% endblock %}
+
+
+

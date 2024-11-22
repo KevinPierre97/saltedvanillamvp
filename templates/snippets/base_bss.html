@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    
+    {% block title %}
+        <title>Salted Vanilla</title>
+    {% endblock %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/landing_page_bss/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="{% static 'css/landing_page_bss/Articles-Cards-images.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing_page_bss/Navbar-Centered-Brand-icons.css' %}">
+    {% block head_addition %} {% endblock %}
+</head>
+
+<body>
+    <div class="main">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <div class="footer">
+        {% block footer %}
+            {% include "snippets/footer_bss.html" %}
+        {% endblock %}
+    </div>
+    
+    {% block scripts %}
+    {#Defaults for landing page, idk if these change or not#}
+        <script src="{% static 'js/landing_page/boostrap/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/landing_page/bs-init.js' %}"></script>
+    {# end of Defaults for landing page #}
+    {% endblock %}
+    
+</body>
+
+</html>

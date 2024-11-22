@@ -14,7 +14,7 @@ def landing_page_view(request):
 class landing_page_form_view(SuccessMessageMixin, CreateView):
     model = Member
     form_class = MemberForm
-    template_name = 'landingpageapp/landing_page.html'
+    template_name = 'landingpageapp/landing_page_bss.html'
 
     form_class.base_fields['referred_by'].disabled = True
 
