@@ -19,7 +19,7 @@ class ReviewList_view(generic.ListView):
 
 @login_required(login_url='/login/')
 def review_list_view(request):
-	reviews_list = Review.objects.all()
+	reviews_list = Review.objects.filter(isVisible=True).order_by('-date_created')
 	paginator = Paginator(reviews_list, 30)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)

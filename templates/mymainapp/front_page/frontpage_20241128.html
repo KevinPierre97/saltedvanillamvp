@@ -1,0 +1,124 @@
+{% extends 'base_bss.html' %}
+{% block title %}
+    <title>Salted Vanilla</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Start: review-cards -->
+    <section>
+        <!-- Start: Articles Cards -->
+        <div class="container py-4 py-xl-5">
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2>Welcome to salted Vanilla</h2>
+                    <p class="w-lg-50">Your home for everything related to scented candles.<br><br>Here are a few recent reviews:</p>
+                </div>
+            </div>
+            {% if featured_reviews %}
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                {% for review in featured_reviews %}
+                <div class="col">
+                    <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="/media/{{ review.candle_id.candle_image  }}">
+                        <div class="card-body p-4"><a href="#">
+                                <h4>{{ review.candle_id.name }}<br><small>{{ review.candle_id.brand_id }}</small></h4>
+                            </a>
+                            <p class="card-text">{{ review.review_text }}</p>
+                            <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="/media/defaults/logo.png">
+                                <div class="d-xl-flex align-items-xl-center"><a href="{% url 'profile' review.user_id.username %}">
+                                        <p class="fw-bold mb-0">{{ review.user_id.username }}</p>
+                                    </a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            {% else %}
+            <p>There are no featured_reviews</p>
+            {% endif %}
+        </div><!-- End: Articles Cards -->
+    </section><!-- End: review-cards -->
+    
+    <!-- Start: stats -->
+    <section>
+        <!-- Start: Stats Color -->
+        <div class="container py-4 py-xl-5">
+            <div class="text-center text-white-50 bg-primary border rounded border-0 p-3">
+                <h3 class="text-center" style="color: var(--bs-body-bg);">Stats</h3>
+                <div class="row row-cols-2 row-cols-md-4">
+                    <div class="col">
+                        <div class="p-3">
+                            <h4 class="display-5 fw-bold text-white mb-0">{{ num_candles }}+</h4>
+                            <p class="mb-0">Candles</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3">
+                            <h4 class="display-5 fw-bold text-white mb-0"> {{ num_accounts }}+</h4>
+                            <p class="mb-0">Scented Candle Lovers</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3">
+                            <h4 class="display-5 fw-bold text-white mb-0">{{ num_reviews }}</h4>
+                            <p class="mb-0">Reviews</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3">
+                            <h4 class="display-5 fw-bold text-white mb-0">{{ num_brands }}+</h4>
+                            <p class="mb-0">Brands</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End: Stats Color -->
+    </section>
+    <!-- End: stats -->
+    <!-- Start: recently-added-candles -->
+    <section>
+        <!-- Start: Features Small Icons Color -->
+        <div class="container text-white bg-primary border rounded border-0 p-4 p-lg-5 py-4 py-xl-5">
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2 class="text-white">Candles</h2>
+                    <p class="w-lg-50">Here are a few recently added candles<br>Click on Candles on the Navigation Bar to get to our full list!</p>
+                </div>
+            </div>
+            {% if recently_added_candles %}
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+            {% for candle in recently_added_candles %}
+                <div class="col">
+                    <div class="d-flex">
+                        <div class="bs-icon-sm bs-icon-rounded bs-icon-semi-white text-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-fire">
+                                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"></path>
+                            </svg></div>
+                        <div class="px-3">
+                            <h4 class="text-white">{{ candle.name }}</h4>
+                            <p>{{ candle.brand_id }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            {% else %}
+                <p>There are no candles</p>
+            {% endif %}
+        </div><!-- End: Features Small Icons Color -->
+    </section><!-- End: recently-added-candles -->
+    
+    <!-- Start: feedback-form -->
+    <section>
+        <!-- Start: Contact Details -->
+        <section class="position-relative py-4 py-xl-5">
+            <div class="container position-relative">
+                <div class="row mb-5">
+                    <div class="col-md-8 col-xl-6 text-center mx-auto">
+                        <h2>Contact us</h2>
+                        <p class="w-lg-50">Feel free to reach out anytime using the links below or by sending an email to SaltedVanillaApp @ Gmail.com<br>Thank you !</p>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End: Contact Details -->
+    </section><!-- End: feedback-form -->
+{% endblock %}

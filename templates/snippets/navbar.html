@@ -1,0 +1,26 @@
+<!-- Start: nav -->
+<section class="navigation-bar">
+    <nav class="navbar navbar-expand-md bg-body py-3">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="{% url 'frontpage' %}"><span class="d-flex justify-content-center align-items-center bs-icon-sm bs-icon-rounded bs-icon-primary me-2 bs-icon"><svg class="bi bi-chevron-double-down" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewbox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path><path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path></svg></span><span>SV</span></a><button data-bs-toggle="collapse" data-bs-target="#navcol-1" class="navbar-toggler"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'frontpage' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'candles' %}">Candles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'candle-search' %}">Search</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'reviews-list' %}">Reviews</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true" data-bs-toggle="dropdown" href="#" role="button">{{ user.username }}</a>
+                        <div class="dropdown-menu"><a class="dropdown-item" href="{% url 'profile' request.user.username %}">Profile</a><a class="dropdown-item" href="{% url 'account_detail' %}">Account</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
+                    {% else %}
+                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>   
+                    {% endif %}
+                </ul><a href="{% url 'candle-add-form' %}"><button class="btn btn-primary" style="border-radius:10px;" type="button">+Candle</button></a>
+            </div>
+        </div>
+    </nav>
+</section>
+<!-- End: nav -->

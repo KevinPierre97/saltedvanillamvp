@@ -16,17 +16,32 @@
     {% block head_addition %} {% endblock %}
 </head>
 
-<body>
-    <div class="main">
-        {% block content %}
-        {% endblock %}
-    </div>
+<body class="d-flex flex-column min-vh-100">
+    {% block nav %}
+        <section id="navigation">
+            {% include 'snippets/navbar.html' %}
+        </section>
+        
+    {% endblock%}
+    
+    {% block messages %}{% include 'snippets/messages.html' %}{% endblock %}
 
-    <div class="footer">
-        {% block footer %}
-            {% include "snippets/footer_bss.html" %}
-        {% endblock %}
-    </div>
+    <main>
+        <div class="main">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+    
+    
+    <footer class="mt-auto">
+        <div class="footer">
+            {% block footer %}
+                {% include "snippets/footer_bss.html" %}
+            {% endblock %}
+        </div>
+    </footer>
+    
     
     {% block scripts %}
     {#Defaults for landing page, idk if these change or not#}

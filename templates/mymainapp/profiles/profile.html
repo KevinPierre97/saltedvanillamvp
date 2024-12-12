@@ -3,6 +3,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 {% block content %}
+    <style type="text/css">
+        .main{
+            min-height: 100vh;
+            height: 100%;
+            margin-top: 5vh;
+            margin-left: 5vh;
+        }
+    </style>
+    
+    
     <h1> {{ profile.username }}'s Profile </h1>
     <br>
     {% if user.is_authenticated %}
@@ -168,8 +178,8 @@
                         {% if user.is_authenticated %}
                             <small><a href="{% url 'report-add-form' 1 review.pk %}">Report</a></small>
                             {% if profile.pk == user.pk %}
-                                <br>
-                                <a href="{% url 'review-update' review.pk %}">Update</a>
+{#                                <br>#}
+{#                                <a href="{% url 'review-update' review.pk %}">Update</a>#}
                                 <br>
                                 <a href="{% url 'review-delete' review.pk %}">Delete</a>
                             {% endif %}
