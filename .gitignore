@@ -1,6 +1,7 @@
 /.sv_venv/*
 /.idea/*
 /media/*
+/mymainapp/static2/*
 **.pyc
 .DS_Store
 .env
