@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.http import Http404
@@ -77,7 +78,7 @@ def candle_detail_view(request, pk):
 	return render(request, 'mymainapp/candles/candle_detail.html', context=context)
 
 
-class candle_create_view(SuccessMessageMixin, CreateView):
+class candle_create_view(SuccessMessageMixin, LoginRequiredMixin,CreateView):
 	model = Candle
 	form_class = CreateCandleModelForm
 	template_name = 'mymainapp/candles/createcandle_form.html'
