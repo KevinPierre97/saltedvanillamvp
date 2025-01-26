@@ -46,3 +46,5 @@ View files are named by topic
 Admin views follow Model file naming
 Template folders follow view file naming
 
+------------------------
+Refoctoring model, view, or forms name (in pychaem) doesnt change their inits. You have to manually update those if you use refacor

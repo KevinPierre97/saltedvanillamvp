@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_select2 import forms as s2forms
 
-from mymainapp.models import Brand, Candle
+from mymainapp.models import Brand, Candle, CandleExperienceVote
 
 
 class ScentNotesWidget(s2forms.ModelSelect2MultipleWidget):
@@ -37,4 +37,22 @@ class CreateCandleModelForm(ModelForm):
         }
         widgets = {
             'notes': ScentNotesWidget
+        }
+
+
+class CandleExperienceVoteModelForm(ModelForm):
+    class Meta:
+        model = CandleExperienceVote
+        fields = ['user_id', 'candle_id', 'cold_throw_rating', 'warm_throw_rating']
+
+        labels = {
+            'user_id': _('User'),
+            'candle_id': _('Candle'),
+            'cold_throw_rating': _('Cold throw rating'),
+            'warm_throw_rating': _('Warm throw rating'),
+        }
+
+        widgets = {
+            'cold_throw_rating': forms.RadioSelect,
+            'warm_throw_rating': forms.RadioSelect,
         }

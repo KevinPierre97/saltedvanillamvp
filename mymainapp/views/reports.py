@@ -31,7 +31,8 @@ class report_review_create_view(RedirectToPreviousMixin, SuccessMessageMixin, Cr
 		context['review'] = Review.objects.get(pk=self.kwargs['review_id'])
 		return context
 
-	#this function is to hid the default fields to not confuse users
-	# def get_form(self, form_class=None):
-	# 	form = super().get_form(form_class)
-	# 	form.fields['reporter'].widget = forms.HiddenInput()
+	def form_valid(self, form):
+		response = super().form_valid(form)
+		review_instance = Review.objects.get(pk=self.kwargs['review_id'])
+		review_instance.reported()
+		return response

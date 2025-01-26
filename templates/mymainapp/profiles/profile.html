@@ -20,6 +20,16 @@
             <p>This is your profile.</p>
         {% endif %}
     {% endif %}
+    
+    {% if user.profile.picture %}
+        <p>Profile picture:</p>
+        {% if user.profile.isPictureApproved %}
+            <img src="{{ user.profile.picture.url }}" alt="" style="width: 100px">
+        {% else %}
+            <img src="{{ user.profile.default_picture.url }}" alt="" style="width: 100px">
+        {% endif %}
+        
+    {% endif %}
     {# ################### Favorites ############################## #}
     <h3>Favorites:</h3>
     {% if favorites_list %}
@@ -178,8 +188,8 @@
                         {% if user.is_authenticated %}
                             <small><a href="{% url 'report-add-form' 1 review.pk %}">Report</a></small>
                             {% if profile.pk == user.pk %}
-{#                                <br>#}
-{#                                <a href="{% url 'review-update' review.pk %}">Update</a>#}
+                                  <br>
+{#                                <a href="{% url 'review-update' review.pk %}">Update</a> #}
                                 <br>
                                 <a href="{% url 'review-delete' review.pk %}">Delete</a>
                             {% endif %}

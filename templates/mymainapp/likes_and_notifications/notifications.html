@@ -1,0 +1,14 @@
+{% extends 'base_bss.html' %}
+{% block content %}
+    <div class="container">
+        <h1>Notifications</h1>
+        {% if notification_list %}
+            {% for notification in notification_list %}
+                <p>{{ notification.message }}</p>
+            {% endfor %}
+        {% else %}
+            <p>No notifications</p>
+        {% endif %}
+    </div>
+    
+{% endblock %}

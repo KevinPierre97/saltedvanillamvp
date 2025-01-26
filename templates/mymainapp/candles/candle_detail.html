@@ -64,6 +64,29 @@
             </div>
           </div>
         </div>
+{#    ################################ Experience Section ##########################}
+        <hr>
+        
+            <h3>Experience<br><small class="text-body-secondary">{% if experience_vote_count %}as determined by {{ experience_vote_count }} votes {% else %}No votes yet{% endif %}</small></h3>
+                {% if experience_vote_count %}
+                <ul>
+                    <li>Cold Throw: {% if candle.get_average_cold_throw_rating > 0 %}{{ candle.get_average_cold_throw_rating }}{% else %}No votes{% endif %}</li>
+                    <li>Warm Throw: {% if candle.get_average_warm_throw_rating > 0 %}{{ candle.get_average_warm_throw_rating }}{% else %}No votes{% endif %}</li>
+                </ul>
+                {% endif %}
+                {% if user_experience_vote %}
+                    <p>Your votes:</p>
+                    <ul>
+                    <li>Cold Throw: {% if user_experience_vote.cold_throw_rating > 0 %}{{ user_experience_vote.cold_throw_rating }}{% else %}No votes{% endif %}</li>
+                    <li>Warm Throw: {% if user_experience_vote.warm_throw_rating > 0 %}{{ user_experience_vote.warm_throw_rating }}{% else %}No votes{% endif %}</li>
+                    </ul>
+                    <a href="{% url 'candle-experience-update-form' user_experience_vote.pk %}">Update Vote Here!</a>
+                {% else %}
+                    <a href="{% url 'candle-experience-add-form' candle.pk %}">Vote here!</a>
+                {% endif %}
+    
+        
+{#    ##############################################################################}
 {# ###################################################### Review Section ########################################################### #}        
         <hr>
         <section>
@@ -71,8 +94,8 @@
             {# I added d-block to this div to make every card/review it's own row without making it wider          #}
             <div class="container">
             <div class="row d-block">
-                {% if candle.review_set.all %}
-                {% for review in candle.review_set.all %}
+                {% if reviews_list %}
+                {% for review in reviews_list %}
                     {% if review.isVisible %}
                         {# I added col-lg-8 and changed mac-width:100% to control width of card/review                   #}
                         <div class="card mb-4 col-lg-8" style="max-width: 100%;">
@@ -92,7 +115,15 @@
     {#                            <h5 class="card-title">Card title</h5>#}
                                 <p class="card-text">{{ review.review_text }}</p>
                                 <p class="card-text"><small class="text-muted">{{ review.date_created }}</small></p>
-                                <small><a href="{% url 'report-add-form' 1 review.pk %}">Report</a></small>  
+                                  {% if review.user_id != request.user %}
+                                      {% if review.is_liked %}
+                                          <small>Loved({{ review.like_count }})</small><br>
+                                      {% else %}
+                                          <small><a href="{% url 'reviewlike-add-form' review.pk %}">Love({{ review.like_count }})</a></small><br>
+                                      {% endif %} 
+                                      
+                                    <small><a href="{% url 'report-add-form' 1 review.pk %}">Report</a></small>
+                                  {% endif %}
                               </div>
                             </div>
                           </div>

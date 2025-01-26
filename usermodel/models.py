@@ -25,6 +25,7 @@ from django import utils
 from django.conf import settings
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.urls import reverse
+import re
 
 
 class MyAccountManager(BaseUserManager):
@@ -122,3 +123,26 @@ class User(AbstractBaseUser, PermissionsMixin):
 		reset_path = reverse('password_reset_confirm', kwargs=reset_url_args)
 		reset_url = f'{settings.BASE_URL}{reset_path}'
 		return reset_url
+
+
+class Profile(models.Model):
+	user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', null=True)
+	bio = models.TextField()
+
+	def profile_picture_path(self, filename):
+		return f"profiles/{re.sub('[^0-9a-zA-Z]', '_', str(self.user_id.id))}/{filename}"
+
+	picture = models.ImageField(upload_to=profile_picture_path, default='defaults/logo.png', null=True, blank=True)
+	# default_picture never changes, it's my first idea to prevent users from using whatever they want as a profile pic
+	# the idea is, when a user changes their picture field, their profile picture will default_picture until admin approval
+	default_picture = models.ImageField(upload_to=profile_picture_path, default='defaults/logo.png', null=True, blank=True)
+	isPictureUpdated = models.BooleanField(default=False)
+	isPictureApproved = models.BooleanField(default=True)
+
+	def new_picture(self):
+		self.isPictureUpdated = True
+		self.isPictureApproved = False
+		self.save()
+
+	def __str__(self):
+		return f'{self.user_id} Profile'

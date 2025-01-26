@@ -36,6 +36,8 @@ from mymainapp.views import (
     brand_create_view,
     brand_detail_view,
     candle_create_view,
+    candle_experience_vote_create_view,
+    candle_experience_vote_update_view,
     review_candle_create_view,
     review_candle_update_view,
     review_candle_delete_view,
@@ -43,6 +45,8 @@ from mymainapp.views import (
     listiem_add_create_view,
     listitem_delete_view,
     candle_filter_search,
+    reviewlike_create_view,
+    notifications_view,
 )
 
 from usermodel.views import (
@@ -62,6 +66,7 @@ urlpatterns = [
     path('<int:referral_option>/', landing_page_form_view.as_view(), name="landing-page-with-referral"),
     path('home/', frontpage_view, name="frontpage"),
     path('profile/<str:usn>', profile_view, name="profile"),
+    path('notifications/', notifications_view, name="notifications"),
     path('candles/', candle_list_view, name="candles"),
     path('reviews/', review_list_view, name="reviews-list"),
     path('candles/<int:pk>/', candle_detail_view, name="candle-detail"),
@@ -76,6 +81,9 @@ urlpatterns = [
     path('candles/list/add/<int:list_type>/<int:candle_id>', listiem_add_create_view.as_view(), name="listitem-add-form"),
     path('candles/list/delete/<int:pk>', listitem_delete_view.as_view(), name="listitem-delete-form"),
     path('candles/search', candle_filter_search, name='candle-search'),
+    path('candles/review/<int:review_id_pk>/like_submit', reviewlike_create_view.as_view(), name="reviewlike-add-form"),
+    path('candles/review/add/experience/<int:candle_id>', candle_experience_vote_create_view.as_view(), name="candle-experience-add-form"),
+    path('candles/review/experience/<int:pk>/update', candle_experience_vote_update_view.as_view(), name="candle-experience-update-form"),
     # path('candles/listitems/add/<int:candle_id>')
     path('register/', registration_view, name="register"),
     path('logout/', logout_view, name="logout"),

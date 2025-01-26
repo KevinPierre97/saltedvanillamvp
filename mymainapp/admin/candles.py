@@ -1,5 +1,5 @@
 from django.contrib import admin
-from mymainapp.models import Candle
+from mymainapp.models import Candle, CandleExperienceVote
 
 
 class CandleAdmin(admin.ModelAdmin):
@@ -8,3 +8,4 @@ class CandleAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Candle, CandleAdmin)
+admin.site.register(CandleExperienceVote)

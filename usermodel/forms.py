@@ -16,7 +16,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
-from usermodel.models import User
+from usermodel.models import User, Profile
 from django.contrib.auth import get_user_model
 
 #define user model
@@ -71,6 +71,12 @@ class AccountUpdateForm(forms.ModelForm):
 			return username
 		raise forms.ValidationError('Username "%s" is already in use.' % username)
 
+
+class ProfileUpdateForm(forms.ModelForm):
+	picture = forms.ImageField(label='Profile pic', required=False, error_messages={'invalid': 'Image files only'}, widget=forms.FileInput)
+	class Meta:
+		model = Profile
+		fields = ('picture',)
 
 
 

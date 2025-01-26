@@ -25,7 +25,7 @@
                         {% else %}
                             <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="/media/defaults/logo2.png">
                         {% endif %}
-                        <div class="card-body p-4"><a href="#">
+                        <div class="card-body p-4"><a href="{{ review.candle_id.get_absolute_url }}">
                                 <h4>{{ review.candle_id.name }}<br><small>{{ review.candle_id.brand_id }}</small></h4>
                             </a>
                             <p class="card-text">{{ review.review_text }}</p>

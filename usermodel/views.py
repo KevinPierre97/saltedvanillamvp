@@ -14,7 +14,8 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from usermodel.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm
+from usermodel.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, ProfileUpdateForm
+from usermodel.models import Profile
 
 
 def registration_view(request):
@@ -78,26 +79,31 @@ def account_view(request):
 	context = {}
 	if request.POST:
 		# email1 = request.user.email
-		form = AccountUpdateForm(request.POST, instance=request.user)
-		if form.is_valid():
-			form.initial = {
+		account_form = AccountUpdateForm(request.POST, request.FILES, instance=request.user)
+		profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+		if account_form.is_valid() and profile_form.is_valid():
+			account_form.initial = {
 					# "email": request.POST['email'],
 					"username": request.POST['username'],
 			}
-
-			hello = form.save(commit=False)
+			profile_form.save()
+			profile = Profile.objects.get(user_id=request.user)
+			profile.new_picture()
+			hello = account_form.save(commit=False)
 			# hello.email = email1
 			hello.save()
 			context['success_message'] = "Updated"
 	else:
-		form = AccountUpdateForm(
+		account_form = AccountUpdateForm(
 
 			initial={
 					# "email": request.user.email,
 					"username": request.user.username,
 				}
 			)
+		profile_form = ProfileUpdateForm(instance=request.user.profile)
 
-	context['account_form'] = form
+	context['account_form'] = account_form
+	context['profile_form'] = profile_form
 	return render(request, "usermodel/account.html", context)
 

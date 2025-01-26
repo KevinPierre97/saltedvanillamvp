@@ -14,7 +14,7 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from usermodel.models import User
+from usermodel.models import User, Profile
 from django.contrib.sessions.models import Session
 
 
@@ -28,6 +28,9 @@ class AccountAdmin(UserAdmin):
 	fieldsets = ()
 
 admin.site.register(User, AccountAdmin)
+
+
+admin.site.register(Profile)
 
 
 

@@ -84,9 +84,12 @@ INSTALLED_APPS = [
     'django_recaptcha',
     # package for adding recaptcha v2 to landing page join form
 
-    'easyaudit'
+    'easyaudit',
     # needed for django-easy-audit
     #getting an error
+
+    #deletes filefields and imagefield files when a new one is saved
+    'django_cleanup.apps.CleanupConfig',
 
 ]
 

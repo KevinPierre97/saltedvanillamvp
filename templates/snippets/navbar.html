@@ -11,7 +11,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true" data-bs-toggle="dropdown" href="#" role="button">{{ user.username }}</a>
-                        <div class="dropdown-menu"><a class="dropdown-item" href="{% url 'profile' request.user.username %}">Profile</a><a class="dropdown-item" href="{% url 'account_detail' %}">Account</a>
+                        <div class="dropdown-menu"><a class="dropdown-item" href="{% url 'profile' request.user.username %}">Profile</a><a class="dropdown-item" href="{% url 'account_detail' %}">Account</a><a class="dropdown-item" href="{% url 'notifications' %}">Notifications</a>
                             <div class="dropdown-divider"></div><a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                         </div>
                     </li>

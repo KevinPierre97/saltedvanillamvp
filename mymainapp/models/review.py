@@ -1,5 +1,6 @@
 from django.db import models
 from usermodel.models import User
+from .profanity_validator import validate_profanity
 
 
 class Review(models.Model):
@@ -20,12 +21,13 @@ class Review(models.Model):
         help_text="With 5 being the best, what do you rate this candle?"
     )
 
-    review_text = models.TextField()
+    review_text = models.TextField(validators=[validate_profanity])
     # title_text = models.TextField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     isVisible = models.BooleanField(default=True, blank=True)
     isFeatured = models.BooleanField(default=False, blank=True)
+    like_count = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-date_created']
@@ -37,7 +39,16 @@ class Review(models.Model):
 
     report_points = models.IntegerField(default=0, null=False)
 
+    def liked(self):
+        self.like_count += 1
+        self.save()
+
+    def reported(self):
+        self.report_points += 1
+        self.save()
+
     def save(self, *args, **kwargs):
-        super(Review, self).save(*args, **kwargs)
         if self.report_points == 3:
             self.isVisible = False
+        super(Review, self).save(*args, **kwargs)
+
